@@ -4,6 +4,7 @@
       <div class="card text-dark my-3">
         <div class="card-body text-white">
           <h4 class="card-title">{{blogProp.title}}</h4>
+          <p>{{blogProp.creator.name}}</p>
         </div>
       </div>
     </router-link>
