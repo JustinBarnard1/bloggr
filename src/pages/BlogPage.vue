@@ -6,7 +6,12 @@
         <p>{{blog.body}}</p>
         <p>{{blog.creator.name}}</p>
         <p>
-          <i class="fa fa-pencil" aria-hidden="true" @click="editToggle = !editToggle"></i>
+          <i
+            v-if="isCreator"
+            class="fa fa-pencil"
+            aria-hidden="true"
+            @click="editToggle = !editToggle"
+          ></i>
         </p>
         <form class="form-inline" @submit.prevent="editBlog" v-if="editToggle">
           <input
@@ -42,12 +47,13 @@ export default {
   },
   computed: {
     profile() {
-      this.$store.state.profile;
+      return this.$store.state.profile;
     },
     blog() {
       return this.$store.state.activeBlog;
     },
     isCreator() {
+      console.log(this.$store.state.profile);
       return this.$store.state.profile.email == this.blog.creatorEmail;
     },
   },
