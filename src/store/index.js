@@ -49,8 +49,6 @@ export default new Vuex.Store({
     async getBlog({ commit }, Id) {
       try {
         let res = await api.get("blogs/" + Id);
-        let comments = await api.get("blogs/" + Id + "/comments")
-        commit('setComments', comments.data)
         commit('setActiveBlog', res.data)
       } catch (error) {
         console.error(error)
@@ -79,6 +77,14 @@ export default new Vuex.Store({
         commit("removeBlog", id)
         commit("setActiveBlog", [])
         router.push({ name: "Home" })
+      } catch (error) {
+        console.error(error)
+      }
+    },
+    async getComment({ commit }, Id) {
+      try {
+        let res = await api.get("blogs/" + Id + "/comments")
+        commit("setComments", res.data)
       } catch (error) {
         console.error(error)
       }

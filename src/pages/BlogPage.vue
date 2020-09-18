@@ -31,8 +31,9 @@
           <button type="submit" class="btn btn-warning">Edit Blog</button>
         </form>
         <button class="btn btn-outline-danger mt-2" v-if="isCreator" @click="deleteBlog">Delete</button>
+        <button class="btn btn-outline-info mt-2">Add Comment</button>
       </div>
-      <comments-comp />
+      <comments-comp v-for="comment in comments" :key="comment.id" :commentProp="comment" />
     </div>
   </div>
 </template>
@@ -47,6 +48,7 @@ export default {
   },
   mounted() {
     this.$store.dispatch("getBlog", this.$route.params.blogId);
+    this.$store.dispatch("getComment", this.$route.params.blogId);
   },
   computed: {
     profile() {
@@ -57,6 +59,9 @@ export default {
     },
     isCreator() {
       return this.$store.state.profile.email == this.blog.creatorEmail;
+    },
+    comments() {
+      return this.$store.state.comments;
     },
   },
   methods: {
