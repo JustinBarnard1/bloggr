@@ -30,12 +30,15 @@
           />
           <button type="submit" class="btn btn-warning">Edit Blog</button>
         </form>
+        <button class="btn btn-outline-danger mt-2" v-if="isCreator" @click="deleteBlog">Delete</button>
       </div>
+      <comments-comp />
     </div>
   </div>
 </template>
 
 <script>
+import CommentsComp from "../components/CommentsComp.vue";
 export default {
   name: "blog-Comp",
   props: ["blogProp"],
@@ -53,7 +56,6 @@ export default {
       return this.$store.state.activeBlog;
     },
     isCreator() {
-      console.log(this.$store.state.profile);
       return this.$store.state.profile.email == this.blog.creatorEmail;
     },
   },
@@ -62,7 +64,18 @@ export default {
       this.blogData.id = this.$route.params.blogId;
       this.$store.dispatch("editBlog", this.blogData);
       this.editToggle = false;
+      //  NOTE need to figure out form reset
+      //   for (let key in this.blogData) {
+      //     this.blogData[key] = null;
+      //   }
     },
+    deleteBlog() {
+      this.blogData.id = this.$route.params.blogId;
+      this.$store.dispatch("deleteBlog", this.blogData.id);
+    },
+  },
+  components: {
+    CommentsComp,
   },
 };
 </script>
