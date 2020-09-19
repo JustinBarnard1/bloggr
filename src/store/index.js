@@ -27,6 +27,9 @@ export default new Vuex.Store({
     },
     removeBlog(state, id) {
       state.blogs = state.blogs.filter(b => b.id == id)
+    },
+    removeComment(state, id) {
+      state.comments = state.comments.filter(c => c.id != id)
     }
   },
   actions: {
@@ -88,6 +91,24 @@ export default new Vuex.Store({
       } catch (error) {
         console.error(error)
       }
-    }
+    },
+    async createComment({ commit, dispatch }, newComment) {
+      try {
+        let res = await api.post('comments', newComment)
+        commit('setComments', [...this.state.comments, res.data])
+        dispatch('getComment', res.data.blog)
+      } catch (error) {
+        console.error(error)
+      }
+    },
+    async deleteComment({ commit }, id) {
+      try {
+        await api.delete("comments/" + id)
+        commit("removeComment", id)
+
+      } catch (error) {
+        console.error(error)
+      }
+    },
   },
 });

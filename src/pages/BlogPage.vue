@@ -31,20 +31,37 @@
           <button type="submit" class="btn btn-warning">Edit Blog</button>
         </form>
         <button class="btn btn-outline-danger mt-2" v-if="isCreator" @click="deleteBlog">Delete</button>
-        <button class="btn btn-outline-info mt-2">Add Comment</button>
       </div>
+      <form class="form-inline" @submit.prevent="createComment">
+        <div class="form-group">
+          <input
+            type="text"
+            class="form-control"
+            v-model="newComment.body"
+            placeholder="Body"
+            aria-describedby="helpId"
+          />
+        </div>
+        <button type="submit" class="btn btn-success">
+          <i class="fa fa-plus" aria-hidden="true">Post New Comment</i>
+        </button>
+      </form>
       <comments-comp v-for="comment in comments" :key="comment.id" :commentProp="comment" />
     </div>
   </div>
 </template>
 
 <script>
-import CommentsComp from "../components/CommentsComp.vue";
+import commentsComp from "../components/CommentsComp.vue";
 export default {
   name: "blog-Comp",
-  props: ["blogProp"],
+  props: [],
   data() {
-    return { blogData: {}, editToggle: false };
+    return {
+      blogData: {},
+      editToggle: false,
+      newComment: {},
+    };
   },
   mounted() {
     this.$store.dispatch("getBlog", this.$route.params.blogId);
@@ -78,9 +95,16 @@ export default {
       this.blogData.id = this.$route.params.blogId;
       this.$store.dispatch("deleteBlog", this.blogData.id);
     },
+    createComment() {
+      let payload = {
+        blog: this.$route.params.blogId,
+        body: this.newComment.body,
+      };
+      this.$store.dispatch("createComment", payload);
+    },
   },
   components: {
-    CommentsComp,
+    commentsComp,
   },
 };
 </script>
