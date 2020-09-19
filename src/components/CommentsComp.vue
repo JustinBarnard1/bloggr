@@ -55,6 +55,11 @@ export default {
     deleteComment() {
       this.$store.dispatch("deleteComment", this.commentProp.id);
     },
+    editComment() {
+      this.commentData.id = this.commentProp.id;
+      this.$store.dispatch("editComment", this.commentData);
+      this.editToggle = false;
+    },
   },
 };
 </script>

@@ -110,5 +110,15 @@ export default new Vuex.Store({
         console.error(error)
       }
     },
+    async editComment({ commit, dispatch }, comment) {
+      try {
+        let res = await api.put('comments/' + comment.id, comment)
+        console.log(res.data);
+        commit('setComments', res.data)
+        dispatch('getComment', res.data.blog)
+      } catch (error) {
+        console.error(error)
+      }
+    }
   },
 });
