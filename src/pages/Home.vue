@@ -37,6 +37,7 @@
   </div>
 </template>
 
+
 <script>
 import blogsComp from "../components/BlogsComp";
 export default {
