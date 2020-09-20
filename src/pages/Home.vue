@@ -3,7 +3,7 @@
     <section class="home container">
       <div class="row">
         <div class="mt-3" v-if="$auth.isAuthenticated">
-          <h3 class="text-white">Create a Blog</h3>
+          <h3 class="text-white">Create A New Blog</h3>
           <form class="form-inline" @submit.prevent="createBlog">
             <div class="form-group">
               <input
