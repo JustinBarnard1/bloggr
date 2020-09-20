@@ -1,6 +1,6 @@
 <template>
-  <div id="comments-comp">
-    <div class="card text-dark" v-if="commentProp.id">
+  <div id="comments-comp" class="my-3">
+    <div class="card text-dark cardbg" v-if="commentProp.id">
       <div class="card-body text-white">
         <h4 class="card-title">{{commentProp.creator.name}}</h4>
         <p>{{commentProp.body}}</p>
